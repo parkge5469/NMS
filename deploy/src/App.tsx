@@ -33,11 +33,11 @@ function App(props?: Props) {
 
 
 	return (
-		<Router history={history}>
+		<Router history={history} >
 			<Switch>
-				<Route path='/sub' component={Sub} />
+				<Route path='/test/sub' component={Sub} />
 				<Route path='/main' component={Main} />
-				<Redirect from='/' to='/sub/login' />
+				<Redirect from='/' to='/test/sub/login' />
 			</Switch>
 		</Router>
 	);

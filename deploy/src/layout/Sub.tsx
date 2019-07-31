@@ -25,7 +25,7 @@ function RouteTag() {
 			<Switch>
 				{
 					routes.map((v: any, key: number) => {
-						if(v.layout==='/sub') {
+						if(v.layout==='/test/sub') {
 							return(
 								<Route	
 									key={key}
@@ -38,7 +38,7 @@ function RouteTag() {
 					})
 				}
 				
-				<Redirect from='/' to='/sub/login'  />
+				<Redirect from='/' to='/test/sub/login'  />
 				
 				
 			</Switch>

@@ -55,11 +55,13 @@ const LoginPage = (props:Props) => {
     function HandleClick(): void{
 
 
-        axios.get('http://localhost:3001/Login',{
-            data: {
-                id: id,
-                pw: password
-            }
+        axios.get('http://localhost:3000/Login',{
+           params: {
+            id: id,
+            pw: password
+           }
+                
+
         })
         .then((data) => {
             console.log(data);
