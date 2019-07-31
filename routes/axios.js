@@ -3,8 +3,10 @@ const router = express.Router();
 const crypto = require('crypto');
 
 router.get('/Login', (req,res) => {
+    const key = 'nms';
+    const value = key+req.query.pw;
 
-    const hash = crypto.createHmac('sha384', 'asdf').update(req.query.pw).digest('hex');
+    const hash = crypto.createHmac('sha384', 'asdf').update(value).digest('hex');
 
     console.log(hash);
     res.send('sdfsdfs');
