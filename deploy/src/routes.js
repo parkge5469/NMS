@@ -14,37 +14,37 @@ const routes = [
     {
         path: '/login',
         component: LoginPage,
-        layout: '/test/sub',
+        layout: '/nms/sub',
     },
     {
         path: '/findId',
         component: FindIdPage,
-        layout: '/test/sub',
+        layout: '/nms/sub',
     },
     {
         path: '/emailFindId',
         component: EmailFindId,
-        layout: '/test/sub',
+        layout: '/nms/sub',
     },
     {
         path: '/phoneFindId',
         component: PhoneFindId,
-        layout: '/test/sub'
+        layout: '/nms/sub'
     },
     {
         path: '/findPassword',
         component: FindPasswordPage,
-        layout: '/test/sub'
+        layout: '/nms/sub'
     },
     {
         path: '/choiceFindPW',
         component: ChoiceFindPW,
-        layout: '/test/sub'
+        layout: '/nms/sub'
     },
     {
         path: '/signUp',
         component: SignUp,
-        layout: '/test/sub',
+        layout: '/nms/sub',
     },
     {
         path: '/homePage',
