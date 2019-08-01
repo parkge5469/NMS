@@ -20,55 +20,28 @@ const LoginPage = (props:Props) => {
     const idInput = React.useRef<any>();   
     const passwordInput = React.useRef<any>();    
 
-    const config: AxiosRequestConfig = {
-        url: '/Login',
-        method: 'get',
-        baseURL: 'http://localhost:3001/',
-        transformRequest: (data: any) => '{"foo":"bar"}',
-        transformResponse: [
-          (data: any) => ({ baz: 'qux' })
-        ],
-        headers: { 'X-FOO': 'bar' },
-       
-        data: { id:id, pw: password },
-        timeout: 10000,
-        withCredentials: true,
-        auth: {
-          username: 'janedoe',
-          password: 's00pers3cret'
-        },
-        responseType: 'json',
-        xsrfCookieName: 'XSRF-TOKEN',
-        xsrfHeaderName: 'X-XSRF-TOKEN',
-        onUploadProgress: (progressEvent: any) => {},
-        onDownloadProgress: (progressEvent: any) => {},
-        maxContentLength: 2000,
-        validateStatus: (status: number) => status >= 200 && status < 300,
-        maxRedirects: 5,
-        proxy: {
-          host: '127.0.0.1',
-          port: 9000
-        },
-        
-      };
-
-    function HandleClick(): void{
-
-
+    function handleClick(): void {
         axios.get('http://localhost:3000/axios/Login',{
            params: {
             id: id,
             pw: password
            }
-                
-
         })
         .then((data) => {
-            console.log(data);
+            if(!data.data.st) {
+                alert(data.data.msg);
+            }
+            // console.log(data);
         })
     }
 
-    function HandleChange(e:React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>): void{
+    function handleKeyDown(e:React.KeyboardEvent): void {
+        if(e.key === 'Enter') {
+            handleClick();
+        }
+    }
+
+    function handleChange(e:React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>): void{
         const value = e.target.value;
         const name = e.target.name;
         if('id'===name) {
@@ -76,8 +49,8 @@ const LoginPage = (props:Props) => {
         }else {
             setPW(value);
         }
-        console.log('LoginPage-HandleChange-ID : ' + JSON.stringify(id));
-        console.log('LoginPage-HandleChange-PW : ' + JSON.stringify(password));
+        // console.log('LoginPage-HandleChange-ID : ' + JSON.stringify(id));
+        // console.log('LoginPage-HandleChange-PW : ' + JSON.stringify(password));
      
     }
 
@@ -91,12 +64,12 @@ const LoginPage = (props:Props) => {
                     <CardContent>
                         <div className={classes.loginForm}>
                             <div className={classes.inputForm}>
-                                <CssTextField ref={idInput} name='id' id="custom-css-standard-input" label="ID" onChange={HandleChange} />
-                                <CssTextField ref={passwordInput} name='pw' id="custom-css-standard-input" label="Password" type='password' onChange={HandleChange} />
+                                <CssTextField ref={idInput} name='id' id="custom-css-standard-input" label="ID" onChange={handleChange} onKeyDown={handleKeyDown} />
+                                <CssTextField ref={passwordInput} name='pw' id="custom-css-standard-input" label="Password" type='password' onChange={handleChange} onKeyDown={handleKeyDown} />
                             </div>
 
                             
-                                <LoginButton variant='contained' color='primary' fullWidth={true} onClick={HandleClick} >
+                                <LoginButton variant='contained' color='primary' fullWidth={true} onClick={handleClick} >
                                     로그인
                                 </LoginButton>
                             

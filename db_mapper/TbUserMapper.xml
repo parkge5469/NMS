@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TbUserMapper">
+    <select id="select">
+        SELECT user_id, user_group_id, area_id, user_login_id, user_name, user_pw, user_dv_cd, user_status_cd, user_email, user_phone, user_addr, user_origin_id, rmk, reg_id, reg_date
+        FROM c_user
+        WHERE 1=1 
+        <if test="user_id != null and user_id != ''">
+        AND user_id = #{user_id}
+        </if>
+        <if test="user_group_id != null and user_group_id != ''">
+        AND user_group_id = #{user_group_id}
+        </if>
+        <if test="area_id != null and area_id != ''">
+        AND area_id = #{area_id}
+        </if>
+        <if test="user_login_id != null and user_login_id != ''">
+        AND user_login_id = #{user_login_id}
+        </if>
+        <if test="user_name != null and user_name != ''">
+        AND user_name = #{user_name}
+        </if>
+        <if test="user_pw != null and user_pw != ''">
+        AND user_pw = #{user_pw}
+        </if>
+        <if test="user_dv_cd != null and user_dv_cd != ''">
+        AND user_dv_cd = #{user_dv_cd}
+        </if>
+        <if test="user_status_cd != null and user_status_cd != ''">
+        AND user_status_cd = #{user_status_cd}
+        </if>
+        <if test="user_email != null and user_email != ''">
+        AND user_email = #{user_email}
+        </if>
+        <if test="user_phone != null and user_phone != ''">
+        AND user_phone = #{user_phone}
+        </if>
+        <if test="user_addr != null and user_addr != ''">
+        AND user_addr = #{user_addr}
+        </if>
+        <if test="user_origin_id != null and user_origin_id != ''">
+        AND user_origin_id = #{user_origin_id}
+        </if>
+        <if test="rmk != null and rmk != ''">
+        AND rmk = #{rmk}
+        </if>
+        <if test="reg_id != null and reg_id != ''">
+        AND reg_id = #{reg_id}
+        </if>
+        <if test="reg_date != null and reg_date != ''">
+        AND reg_date = #{reg_date}
+        </if>
+    </select>
+</mapper>
