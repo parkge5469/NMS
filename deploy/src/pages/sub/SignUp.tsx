@@ -5,12 +5,67 @@ import { makeStyles } from '@material-ui/core/styles';
 import {} from '@material-ui/core/colors';
 import MaskedInput from 'react-text-mask';
 import InputMask from 'react-input-mask';
+import axios from 'axios';
 
 interface Props extends RouteComponentProps<void>{}
 
 
 const SignUp = (props:Props) => {
     const classes = useStyles();
+
+    const [ id,setId ] = React.useState('');
+    const [ pw,setPw ] = React.useState('');
+    const [ pwCheck,setPwCheck ] = React.useState('');
+    const [ name,setName ] = React.useState('');
+    const [ code,setCode ] = React.useState('');
+    const [ phone,setPhone ] = React.useState('');
+    const [ email,setEmail ] = React.useState('');
+    const [ addr,setAddr ] = React.useState('');
+
+
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>): void => {
+        const value = e.target.value;
+        const name = e.target.name;
+
+        if('id'===name) {
+            setId(value);
+        } else if('pw'===name) {
+            setPw(value);
+        }else if('pwCheck'===name) {
+            setPwCheck(value);
+        }else if('name'===name) {
+            setName(value);
+        }else if('code'===name) {
+            setCode(value);
+        }else if('phone'===name) {
+            setPhone(value);
+        }else if('email'===name) {
+            setEmail(value);
+        }else if('addr'===name) {
+            setAddr(value);
+        }
+    }
+
+    const handleClick = (): void => {
+        axios.get('/axios/SignUp', {
+            params: {
+                id: id,
+                pw: pw,
+                name: name,
+                code: code,
+                phone: phone,
+                email: email,
+                addr: addr
+            }
+        })
+        .then((data) => {
+            console.log(data);
+        })
+        .catch((err) => {
+            console.log('(/axios/SignUp) err : '+err);
+        })
+    }
 
     // const TextMaskCustom = () => {
     //     return(
@@ -37,7 +92,8 @@ const SignUp = (props:Props) => {
                             <TextField
                                 id="outlined-full-width"
                                 placeholder="아이디를 입력하세요."
-
+                                name='id' 
+                                onChange={handleChange}
                                 margin="normal"
                                 variant="outlined"
                             />
@@ -52,7 +108,8 @@ const SignUp = (props:Props) => {
                             <TextField
                                 id="outlined-full-width"
                                 placeholder="비밀번호를 입력하세요."
-
+                                name='pw' 
+                                onChange={handleChange}
                                 margin="normal"
                                 variant="outlined"
                             />
@@ -67,7 +124,8 @@ const SignUp = (props:Props) => {
                             <TextField
                                 id="outlined-full-width"
                                 placeholder="비밀번호를 입력하세요."
-
+                                name='pwCheck' 
+                                onChange={handleChange}
                                 margin="normal"
                                 variant="outlined"
                             />
@@ -85,7 +143,8 @@ const SignUp = (props:Props) => {
                             <TextField
                                 id="outlined-full-width"
                                 placeholder="이름을 입력하세요."
-
+                                name='name' 
+                                onChange={handleChange}
                                 margin="normal"
                                 variant="outlined"
                             />
@@ -99,9 +158,9 @@ const SignUp = (props:Props) => {
                             </InputLabel>
                             <Select
                                 native
-                                name="age"
                                 
-
+                                name='code' 
+                                
                             >
                                 <option value="">선택하세요.</option>
                                 <option value={10}>Ten</option>
@@ -122,8 +181,9 @@ const SignUp = (props:Props) => {
                             </InputLabel>
                             <TextField
                                 
-                                placeholder="이메일을 입력하세요."
-                                
+                                placeholder="전화번호를 입력하세요."
+                                name='phone' 
+                                onChange={handleChange}
                                 margin="normal"
                                 variant="outlined"
                                 type='text'
@@ -148,7 +208,8 @@ const SignUp = (props:Props) => {
                             <TextField
                                 id="outlined-full-width"
                                 placeholder="이메일을 입력하세요."
-
+                                name='email' 
+                                onChange={handleChange}
                                 margin="normal"
                                 variant="outlined"
                             />
@@ -169,7 +230,8 @@ const SignUp = (props:Props) => {
                             <TextField
                                 id="outlined-full-width"
                                 placeholder="주소를 입력하세요."
-
+                                name='addr' 
+                                onChange={handleChange}
                                 margin="normal"
                                 variant="outlined"
                             />
@@ -188,7 +250,7 @@ const SignUp = (props:Props) => {
                 <div className={classes.input4}>
                     <div className={classes.input4Button}>
                         <NavLink to='/'><Button variant='contained' color='primary' fullWidth={true} >취소</Button></NavLink>
-                        <NavLink to='/'><Button variant='contained' color='primary' fullWidth={true} >가입</Button></NavLink>
+                        <Button variant='contained' color='primary' fullWidth={true} onClick={handleClick} >가입</Button>
                     </div>
                 </div>
                 

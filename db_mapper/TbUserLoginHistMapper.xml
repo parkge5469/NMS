@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TbUserLoginHistMapper">
+    <select id="selectHist">
+        SELECT *
+        FROM c_user_login_hist
+        WHERE 1=1 
+        AND form_id = #{form_id}
+    </select>
+
+    <insert id="insertHist">
+        INSERT INTO c_user_login_hist
+        VALUES
+        (
+            #{form_id},
+            #{user_login_id},
+            #{server_ip},
+            #{client_ip},
+            #{user_agent},
+            #{login_status_cd},
+            #{rmk},
+            #{reg_id},
+            now()
+        )
+    </insert>
+</mapper>

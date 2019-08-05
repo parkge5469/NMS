@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { RouteComponentProps,NavLink } from 'react-router-dom';
+import { RouteComponentProps,NavLink,Redirect } from 'react-router-dom';
 import { makeStyles, withStyles } from '@material-ui/styles'
 import { Card,CardContent,Button,TextField } from '@material-ui/core';
 import { orange } from '@material-ui/core/colors';
 import axios, {AxiosRequestConfig} from 'axios';
+import IDCreator from '../../utils/IDCreator';
 
 interface Props extends RouteComponentProps<void>{}
 interface LoginProps {
@@ -20,28 +21,34 @@ const LoginPage = (props:Props) => {
     const idInput = React.useRef<any>();   
     const passwordInput = React.useRef<any>();    
 
-    function handleClick(): void {
-        axios.get('http://localhost:3000/axios/Login',{
+    const handleClick = (): void => {
+        const formId = IDCreator.createLongId();
+        axios.get('/axios/Login',{
            params: {
-            id: id,
-            pw: password
+            formId: formId,
+            data: {
+                id: id,
+                pw: password
+            }
            }
         })
         .then((data) => {
             if(!data.data.st) {
                 alert(data.data.msg);
+            } else {
+                props.history.push('/nms/main');
             }
             // console.log(data);
         })
     }
 
-    function handleKeyDown(e:React.KeyboardEvent): void {
+    const handleKeyDown = (e:React.KeyboardEvent): void => {
         if(e.key === 'Enter') {
             handleClick();
         }
     }
 
-    function handleChange(e:React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>): void{
+    const handleChange = (e:React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>): void => {
         const value = e.target.value;
         const name = e.target.name;
         if('id'===name) {

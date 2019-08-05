@@ -25,7 +25,7 @@ function Routes(): any {
 			<Switch>
 				{
 					routes.map((v: any, key: number) => {
-						if(v.layout==='/main') {
+						if(v.layout==='/nms/main') {
 							return(
 								<Route	
 									key={key}
@@ -38,7 +38,7 @@ function Routes(): any {
 					})
 				}
 				
-				<Redirect from='/main' to='/main/homePage'  />
+				<Redirect from='/nms/main' to='/nms/main/homePage'  />
 				
 				
 			</Switch>

@@ -36,7 +36,7 @@ function App(props?: Props) {
 		<Router history={history} >
 			<Switch>
 				<Route path='/nms/sub' component={Sub} />
-				<Route path='/main' component={Main} />
+				<Route path='/nms/main' component={Main} />
 				<Redirect from='/' to='/nms/sub/login' />
 			</Switch>
 		</Router>

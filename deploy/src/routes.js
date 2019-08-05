@@ -49,12 +49,12 @@ const routes = [
     {
         path: '/homePage',
         component: HomePage,
-        layout: '/main',
+        layout: '/nms/main',
     },
     {
         path: '/todoPage',
         component: TodoPage,
-        layout: '/main',
+        layout: '/nms/main',
     },
 ]
 
