@@ -27,8 +27,8 @@ module.exports = (req,res,decoded) => {
 
         if(id!=''&&pw!='') {
             promise.then((result) => {
-                console.log(decoded);
-                console.log(result.rows[0]);
+                // console.log(decoded);
+                // console.log(result.rows[0]);
                 if(undefined === result.rows[0]) {
                     dao.getUserInfo(id)
                     .then((data) => {
