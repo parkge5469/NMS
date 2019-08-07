@@ -14,6 +14,7 @@ import withRoot from "./withRoot";
 
 import Sub from './layout/Sub';
 import Main from './layout/Main';
+import NoMatch from "./pages/error/NoMatch";
 
 
 
@@ -37,7 +38,11 @@ function App(props?: Props) {
 			<Switch>
 				<Route path='/nms/sub' component={Sub} />
 				<Route path='/nms/main' component={Main} />
+				<Route path='/nms/404' component={NoMatch} />
+				<Route path='/nms/*' component={NoMatch} />
 				<Redirect from='/' to='/nms/sub/login' />
+				
+
 			</Switch>
 		</Router>
 	);

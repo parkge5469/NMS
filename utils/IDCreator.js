@@ -131,6 +131,7 @@ module.exports.toST = function (sha) {
     return id;
 }
 
+/*
 function doTest() {
     const crypto = require('crypto');
 
@@ -142,3 +143,4 @@ function doTest() {
 }
 
 doTest();
+*/

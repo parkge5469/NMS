@@ -3,5 +3,6 @@ module.exports = {
     redisConfig: {
         host: '192.168.0.89',
         port: 6379
-    }
+    },
+    cipherKey: 'softfusion'
 }

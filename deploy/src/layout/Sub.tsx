@@ -17,9 +17,31 @@ import { Todo } from "./../model/model";
 import { RootState } from "./../reducers/index";
 import withRoot from "./../withRoot";
 import routes from './../routes.js';
+import IDCreator from '../utils/IDCreator';
+import axios from 'axios';
+import NoMatch from "../pages/error/NoMatch";
 
 function RouteTag() {
 	const classes = useStyles();
+	React.useEffect(() => {
+		if(sessionStorage.getItem('jwt_token') === null){
+			const key = IDCreator.createLongId();
+			console.log('key '+key);
+			axios.get('/axios/CreateJwt',{
+				params: {
+					key: key
+				}
+			})
+			.then((jwtToken: any) => {
+				console.log(jwtToken.data);
+				sessionStorage.setItem('jwt_token',jwtToken.data);
+			})
+			.catch((err) => {
+				console.log('/axios/CreateJwt err: '+err);
+			})
+		}
+		// console.log(sessionStorage.getItem('jwt_token'));
+	})
 	const switchRoutes = (
 		<div className={classes.root}>
 			<Switch>
@@ -33,12 +55,15 @@ function RouteTag() {
 									component={v.component}
 								/>
 								
-							)	
+							)
 						}
 					})
 				}
+				{
+					<Route path='/nms/sub/*' component={NoMatch} />
+				}
 				
-				<Redirect from='/' to='/nms/sub/login'  />
+				
 				
 				
 			</Switch>

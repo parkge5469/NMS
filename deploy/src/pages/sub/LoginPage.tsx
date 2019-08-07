@@ -5,6 +5,8 @@ import { Card,CardContent,Button,TextField } from '@material-ui/core';
 import { orange } from '@material-ui/core/colors';
 import axios, {AxiosRequestConfig} from 'axios';
 import IDCreator from '../../utils/IDCreator';
+import jwt from 'jsonwebtoken';
+import Modal from 'react-modal'
 
 interface Props extends RouteComponentProps<void>{}
 interface LoginProps {
@@ -18,28 +20,88 @@ const LoginPage = (props:Props) => {
     const classes = useStyles();
     const [ id,setId ] = React.useState('');
     const [ password,setPW ] = React.useState(''); 
+    const [ modalIsOpen,setModalIsOpen ] = React.useState(false); 
     const idInput = React.useRef<any>();   
     const passwordInput = React.useRef<any>();    
+    const customStyles = {
+        content : {
+            top                   : '50%',
+            left                  : '50%',
+            right                 : 'auto',
+            bottom                : 'auto',
+            marginRight           : '-50%',
+            transform             : 'translate(-50%, -50%)'
+        }
+    };
+
+    const closeModal = () => {
+        setModalIsOpen(false);
+      }
+     const sessionClear = () => {
+        sessionStorage.clear();
+        const key = IDCreator.createLongId();
+			console.log('key '+key);
+			axios.get('/axios/CreateJwt',{
+				params: {
+					key: key
+				}
+			})
+			.then((jwtToken: any) => {
+				console.log(jwtToken.data);
+				sessionStorage.setItem('jwt_token',jwtToken.data);
+			})
+			.catch((err) => {
+				console.log('/axios/CreateJwt err: '+err);
+		});
+        
+    }
 
     const handleClick = (): void => {
         const formId = IDCreator.createLongId();
-        axios.get('/axios/Login',{
-           params: {
-            formId: formId,
-            data: {
-                id: id,
-                pw: password
-            }
-           }
-        })
-        .then((data) => {
-            if(!data.data.st) {
-                alert(data.data.msg);
-            } else {
-                props.history.push('/nms/main');
-            }
-            // console.log(data);
-        })
+        const jwtId = IDCreator.createLongId();
+        const jwt_token = sessionStorage.getItem('jwt_token');
+
+        
+
+        if(jwt_token !== null) {
+            console.log(jwt_token);
+
+            const token = jwt.sign(
+                {   
+                    jwtId: jwtId,
+                    formId: formId,
+                    data: {
+                        id: id,
+                        pw: password
+                    }
+                },
+                jwt_token
+            )
+
+            axios.get('/axios/Login',{
+                params: {
+                    token: token
+                }
+             })
+             .then((data) => {
+                 if('error' === data.data.st) {
+                     //setModalIsOpen(true);
+                     alert(data.data.msg);
+                 } else {
+                    console.log('asdasdasd');
+                    sessionStorage.setItem('jwt_token', data.data.jwt_token);
+                    props.history.push('/nms/main');
+                 }
+                 // console.log(data);
+             })
+             .catch((err) => {
+                console.log('err : '+err);
+             })
+        } else {
+            console.log('jwt token null');
+        }
+
+        
     }
 
     const handleKeyDown = (e:React.KeyboardEvent): void => {
@@ -64,6 +126,7 @@ const LoginPage = (props:Props) => {
     return (
         <div className={classes.root}>
             <div className={classes.loginBox}>
+                <button onClick={sessionClear}>sessionStorage 초기화</button>
                 <Card className={classes.card}>
                     <h1>
                         LOGIN

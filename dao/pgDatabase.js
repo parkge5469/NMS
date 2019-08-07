@@ -45,3 +45,16 @@ module.exports.insert = (client, sql) => {
     })
 }
 
+module.exports.update = (client, sql) => {
+    return new Promise((resolve, reject) => {
+    
+        client.query(sql, (err,result) => {
+            if(err) {
+                reject(err);
+            } else {
+                resolve(result);
+            }
+        })
+    })
+}
+
